@@ -1,8 +1,8 @@
 <script lang="ts">
-  import '../app.css';
   import ThemeSwitcher from '$lib/components/ThemeSwitcher.svelte';
+  import '../app.css';
 
-  let theme = $state('light');
+  let theme = $state('dark');
 </script>
 
 <div data-theme={theme} class="h-screen w-full bg-background text-foreground">

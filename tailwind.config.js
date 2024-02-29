@@ -10,14 +10,18 @@ export default {
   plugins: [
     createThemes({
       light: {
-        background: colors.slate[50],
-        foreground: colors.slate[950],
-        primary: colors.yellow[600],
+        background: colors.zinc[50],
+        foreground: colors.zinc[950],
+        primary: colors.blue[600],
+        success: colors.green[600],
+        error: colors.red[600],
       },
       dark: {
-        background: colors.slate[950],
-        foreground: colors.slate[50],
-        primary: colors.pink[600],
+        background: colors.zinc[950],
+        foreground: colors.zinc[50],
+        primary: colors.blue[600],
+        success: colors.green[600],
+        error: colors.red[600],
       },
     }),
   ],
