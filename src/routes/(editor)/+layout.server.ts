@@ -1,5 +1,5 @@
 import { findById } from '$lib/services/userService';
-import { variables } from '$lib/variables';
+import { variables } from '$lib/util/variables';
 import { redirect } from '@sveltejs/kit';
 import jsonwebtoken, { type JwtPayload } from 'jsonwebtoken';
 import type { LayoutServerLoad } from './$types';

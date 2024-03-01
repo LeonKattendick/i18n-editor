@@ -1,4 +1,4 @@
-import { prisma } from '$lib/prisma';
+import { prisma } from '$lib/util/prisma';
 import type { User } from '@prisma/client';
 
 export const createUser = async (name: string, password: string, refreshToken: string): Promise<User> => {
