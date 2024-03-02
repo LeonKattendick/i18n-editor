@@ -4,7 +4,6 @@ import type { Cookies } from '@sveltejs/kit';
 import jsonwebtoken from 'jsonwebtoken';
 
 export const setAuthenticationCookie = (cookies: Cookies, uuid: string) => {
-  console.log(import.meta.env.VITE_JWT_PRIVATE_KEY);
   const jwt = jsonwebtoken.sign({ uuid }, variables.jwtPrivateKey, { expiresIn: '15m' });
 
   cookies.set(variables.cookieName, String(jwt), {
