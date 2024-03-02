@@ -29,6 +29,9 @@ devDependencies:
   bcryptjs:
     specifier: ^2.4.3
     version: 2.4.3
+  classnames:
+    specifier: ^2.5.1
+    version: 2.5.1
   jsonwebtoken:
     specifier: ^9.0.2
     version: 9.0.2
@@ -770,6 +773,10 @@ packages:
       readdirp: 3.6.0
     optionalDependencies:
       fsevents: 2.3.3
+    dev: true
+
+  /classnames@2.5.1:
+    resolution: {integrity: sha512-saHYOzhIQs6wy2sVxTM6bUDsQO4F50V9RQ22qBpEdCW+I+/Wmke2HOl6lS6dTpdxVhb88/I6+Hs+438c3lfUow==}
     dev: true
 
   /color-convert@2.0.1:

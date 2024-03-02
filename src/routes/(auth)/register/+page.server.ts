@@ -14,7 +14,7 @@ export const actions: Actions = {
     if (!name || !password || !passwordConfirm) {
       return fail(400, { required: true });
     }
-    if (!name.match('[a-zA-Z0-9]+') && name.length >= 3) {
+    if (!/^[a-zA-Z0-9]+$/.test(name) && name.length >= 3) {
       return fail(400, { wrongFormat: true });
     }
     if (password !== passwordConfirm) {
