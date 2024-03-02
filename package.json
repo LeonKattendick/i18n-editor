@@ -22,7 +22,6 @@
     "@types/jsonwebtoken": "^9.0.6",
     "autoprefixer": "^10.4.17",
     "bcryptjs": "^2.4.3",
-    "crypto": "^1.0.1",
     "jsonwebtoken": "^9.0.2",
     "postcss": "^8.4.35",
     "prettier": "^3.1.1",
