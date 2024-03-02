@@ -1,3 +1,8 @@
+<script lang="ts">
+  export let data;
+  console.log(data);
+</script>
+
 <svelte:head>
   <title>i18n-editor :: Projekte</title>
 </svelte:head>

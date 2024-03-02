@@ -6,4 +6,4 @@
   <title>i18n-editor :: Registrierung</title>
 </svelte:head>
 
-<AuthForm actionPath="register" buttonTitle="Neuen Account erstellen" secondTitle="Einloggen" />
+<AuthForm type="register" />

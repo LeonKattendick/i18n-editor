@@ -1,18 +1,23 @@
-import { findById } from '$lib/services/userService';
+import { findByUuid } from '$lib/services/userService';
 import { variables } from '$lib/util/variables';
 import { redirect } from '@sveltejs/kit';
 import jsonwebtoken, { type JwtPayload } from 'jsonwebtoken';
 import type { LayoutServerLoad } from './$types';
 
-export const load: LayoutServerLoad = ({ cookies }) => {
+export const load: LayoutServerLoad = async ({ cookies }) => {
   const token = cookies.get(variables.cookieName);
 
   try {
-    const user = jsonwebtoken.verify(String(token), variables.jwtPrivateKey) as JwtPayload;
-    console.log(user);
+    const jwtUser = jsonwebtoken.verify(String(token), variables.jwtPrivateKey) as JwtPayload;
+    const user = await findByUuid(jwtUser.uuid);
+
+    if (!user) {
+      cookies.delete(variables.cookieName, { path: '/' });
+      throw redirect(301, '/login');
+    }
 
     return {
-      authUser: findById(Number.parseInt(user.sub ?? '')),
+      user: { id: user.id, name: user.name },
     };
   } catch {
     cookies.delete(variables.cookieName, { path: '/' });

@@ -10,9 +10,9 @@ datasource db {
 
 model User {
   id Int @id @default(autoincrement())
+  uuid String @db.Uuid @unique
   name String @unique
   password String
-  refreshToken String
   projects Project[]
 }
 

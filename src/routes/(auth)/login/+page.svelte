@@ -6,4 +6,4 @@
   <title>i18n-editor :: Login</title>
 </svelte:head>
 
-<AuthForm actionPath="login" buttonTitle="Einloggen" secondTitle="Account erstellen" />
+<AuthForm type="login" />
