@@ -5,7 +5,7 @@
   let theme = $state('dark');
 </script>
 
-<div data-theme={theme} class="h-screen w-full bg-background text-foreground">
+<div data-theme={theme} class="h-screen w-full bg-background text-textColor">
   <ThemeSwitcher bind:theme />
   <slot />
 </div>

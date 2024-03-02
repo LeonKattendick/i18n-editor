@@ -3,6 +3,5 @@
 @tailwind utilities;
 
 body {
-  font-family: 'Montserrat', sans-serif;
-  font-optical-sizing: auto;
+  font-family: 'Segoe UI', sans-serif;
 }
