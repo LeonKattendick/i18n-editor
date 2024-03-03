@@ -20,7 +20,7 @@
 <form
   action={`?/register`}
   method="post"
-  class="flex flex-col gap-6 border border-borderColor px-4 py-5 rounded min-w-[20%]"
+  class="flex flex-col gap-6 border border-borderColor px-4 py-5 rounded min-w-[20%] bg-backgroundSecondary"
 >
   <input
     class={classnames(
@@ -52,10 +52,10 @@
   {#if errorMessage}
     <span class="text-error text-sm font-bold">{errorMessage}</span>
   {/if}
-  <div class="flex flex-col gap-2">
-    <button class="bg-primary text-zinc-50 rounded py-1 font-semibold tracking-wide" type="submit">
+  <div class="flex flex-col gap-1">
+    <button class="bg-success text-zinc-50 rounded py-1 font-semibold tracking-wide" type="submit">
       Neuen Account erstellen
     </button>
-    <button class="text-secondary self-end" onclick={() => goto('/login')} type="button"> Einloggen </button>
+    <button class="text-secondary self-end" onclick={() => goto('/login')} type="button">Einloggen</button>
   </div>
 </form>

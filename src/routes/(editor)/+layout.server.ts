@@ -8,7 +8,7 @@ export const load: LayoutServerLoad = async ({ cookies }) => {
   const token = cookies.get(variables.cookieName);
 
   try {
-    const jwtUser = jsonwebtoken.verify(String(token), variables.jwtPrivateKey) as JwtPayload;
+    const jwtUser = jsonwebtoken.verify(String(token?.substring(7)), variables.jwtPrivateKey) as JwtPayload;
     const user = await findByUuid(jwtUser.uuid);
 
     if (!user) {

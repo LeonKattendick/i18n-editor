@@ -1,4 +1,4 @@
-import { setAuthenticationCookie } from '$lib/services/authService';
+import { deleteAuthenticationCookie, setAuthenticationCookie } from '$lib/services/authService';
 import { findByName } from '$lib/services/userService';
 import { fail, redirect, type Actions } from '@sveltejs/kit';
 import bcryptjs from 'bcryptjs';
@@ -24,5 +24,9 @@ export const actions: Actions = {
     setAuthenticationCookie(cookies, user.uuid);
 
     throw redirect(302, '/projects');
+  },
+  logout: ({ cookies }) => {
+    deleteAuthenticationCookie(cookies);
+    throw redirect(302, '/login');
   },
 };
