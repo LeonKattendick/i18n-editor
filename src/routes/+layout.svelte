@@ -2,10 +2,11 @@
   import ThemeSwitcher from '$lib/components/ThemeSwitcher.svelte';
   import '../app.css';
 
-  let theme = $state('dark');
+  let { data } = $props();
+  let theme = $derived(data.theme);
 </script>
 
 <div data-theme={theme} class="h-screen w-full bg-background text-textColor">
-  <ThemeSwitcher bind:theme />
+  <ThemeSwitcher {theme} />
   <slot />
 </div>

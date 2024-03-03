@@ -43,7 +43,11 @@
     <span class="text-error text-sm font-bold">{errorMessage}</span>
   {/if}
   <div class="flex flex-col gap-2">
-    <button class="bg-primary text-neutral-50 rounded py-1 font-semibold tracking-wide" type="submit">Einloggen</button>
-    <button class="text-secondary self-end" onclick={() => goto('/register')} type="button">Account erstellen</button>
+    <button class="bg-primary text-neutral-50 rounded py-1 font-semibold tracking-wide outline-none" type="submit">
+      Einloggen
+    </button>
+    <button class="text-secondary self-end outline-none" onclick={() => goto('/register')} type="button">
+      Account erstellen
+    </button>
   </div>
 </form>

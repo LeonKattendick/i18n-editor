@@ -1,12 +1,13 @@
 import { dev } from '$app/environment';
+import { JWT_PRIVATE_KEY } from '$env/static/private';
 import { variables } from '$lib/util/variables';
 import type { Cookies } from '@sveltejs/kit';
 import jsonwebtoken from 'jsonwebtoken';
 
 export const setAuthenticationCookie = (cookies: Cookies, uuid: string) => {
-  const jwt = jsonwebtoken.sign({ uuid }, variables.jwtPrivateKey, { expiresIn: '1d' });
+  const jwt = jsonwebtoken.sign({ uuid }, JWT_PRIVATE_KEY, { expiresIn: '1d' });
 
-  cookies.set(variables.cookieName, `Bearer ${jwt}`, {
+  cookies.set(variables.authCookieName, `Bearer ${jwt}`, {
     path: '/',
     httpOnly: true,
     sameSite: 'strict',
@@ -16,5 +17,5 @@ export const setAuthenticationCookie = (cookies: Cookies, uuid: string) => {
 };
 
 export const deleteAuthenticationCookie = (cookies: Cookies) => {
-  cookies.delete(variables.cookieName, { path: '/' });
+  cookies.delete(variables.authCookieName, { path: '/' });
 };

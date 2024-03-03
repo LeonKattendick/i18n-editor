@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
-  const navItemClasses = 'px-3 py-1';
-  const navItemClassesActive = 'bg-primary rounded text-neutral-50';
+  const navItemClasses = 'px-3 py-1 rounded hover:bg-primary hover:bg-opacity-30 transition-colors duration-200';
+  const navItemClassesActive = 'bg-primary text-neutral-50 hover:bg-opacity-100';
 
   const navItemList = [
     {
@@ -18,7 +18,7 @@
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
   import classnames from 'classnames';
-  import { ArrowRightToBracketOutline } from 'flowbite-svelte-icons';
+  import { ArrowRightToBracketOutline, UserOutline } from 'flowbite-svelte-icons';
 
   const { user } = $props<{ user: { id: number; name: string } }>();
 
@@ -40,7 +40,10 @@
     {/each}
   </ul>
   <span class="flex-1 flex justify-end items-center gap-4">
-    <span class="">Hi, {user.name}!</span>
+    <span class="py-0.5 px-2 rounded border border-borderColor bg-background flex items-center gap-1 text-neutral-50">
+      <UserOutline />
+      {user.name}
+    </span>
     <form action="/login?/logout" method="post" class="">
       <button class="py-0.5 px-2 rounded bg-error flex items-center gap-1 text-neutral-50">
         <ArrowRightToBracketOutline size="sm" /> Logout
