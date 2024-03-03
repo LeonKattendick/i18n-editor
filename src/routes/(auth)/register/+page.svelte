@@ -53,7 +53,7 @@
     <span class="text-error text-sm font-bold">{errorMessage}</span>
   {/if}
   <div class="flex flex-col gap-1">
-    <button class="bg-success text-zinc-50 rounded py-1 font-semibold tracking-wide" type="submit">
+    <button class="bg-success text-neutral-50 rounded py-1 font-semibold tracking-wide" type="submit">
       Neuen Account erstellen
     </button>
     <button class="text-secondary self-end" onclick={() => goto('/login')} type="button">Einloggen</button>

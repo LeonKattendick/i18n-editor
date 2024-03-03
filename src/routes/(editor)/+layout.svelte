@@ -5,4 +5,6 @@
 </script>
 
 <Navigation user={data.user} />
-<slot />
+<div class="p-4">
+  <slot />
+</div>
