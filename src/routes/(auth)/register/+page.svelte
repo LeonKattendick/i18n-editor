@@ -1,8 +1,10 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
+  import ThemeSwitcher from '$lib/components/ThemeSwitcher.svelte';
   import classnames from 'classnames';
 
-  const { form } = $props();
+  let { form, data } = $props();
+  const theme = $derived(data.theme);
 
   const errorMessage = $derived.by(() => {
     if (form?.required) return 'Füllen Sie alle Felder aus';
@@ -17,6 +19,7 @@
   <title>i18n-editor :: Registrierung</title>
 </svelte:head>
 
+<ThemeSwitcher {theme} classNames="text-3xl fixed right-2 bottom-3" />
 <form
   action={`?/register`}
   method="post"
