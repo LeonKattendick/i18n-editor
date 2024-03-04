@@ -3,7 +3,7 @@ import { variables } from '$lib/util/variables';
 import { redirect, type Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ cookies, request }) => {
+export const load: PageServerLoad = async ({ cookies }) => {
   const token = cookies.get(variables.authCookieName);
 
   if (token) {

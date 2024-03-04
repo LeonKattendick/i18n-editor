@@ -1,6 +1,7 @@
 <script lang="ts" context="module">
-  const navItemClasses = 'px-3 py-1 rounded hover:bg-primary hover:bg-opacity-30 transition-colors duration-200';
-  const navItemClassesActive = 'bg-primary text-neutral-50 hover:bg-opacity-100';
+  const navItemClasses = 'px-3 py-1 rounded hover:bg-primary transition-colors duration-200';
+  const navItemClassesNotActive = 'hover:bg-opacity-30';
+  const navItemClassesActive = 'bg-primary text-neutral-50';
 
   const navItemList = [
     {
@@ -32,7 +33,7 @@
     {#each navItemList as item}
       <li>
         <button
-          class={classnames(navItemClasses, currentPath === item.key && navItemClassesActive)}
+          class={classnames(navItemClasses, currentPath === item.key ? navItemClassesActive : navItemClassesNotActive)}
           on:click={() => goto(`/${item.key}`)}
         >
           {item.label}

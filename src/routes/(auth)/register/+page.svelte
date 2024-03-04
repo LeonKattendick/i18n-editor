@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { enhance } from '$app/forms';
   import { goto } from '$app/navigation';
   import ThemeSwitcher from '$lib/components/ThemeSwitcher.svelte';
   import classnames from 'classnames';
@@ -8,7 +9,8 @@
 
   const errorMessage = $derived.by(() => {
     if (form?.required) return 'Füllen Sie alle Felder aus';
-    if (form?.wrongFormat) return 'Der Nutzername hat ein falsches Format';
+    if (form?.wrongFormatName) return 'Der Nutzername hat ein falsches Format';
+    if (form?.wrongFormatPassword) return 'Das Passwort ist zu kurz';
     if (form?.passwordMismatch) return 'Die beiden Passwörter stimmen nicht überein';
     if (form?.notUniqueUser) return 'Der Nutzername exisitert bereits';
     return '';
@@ -24,6 +26,7 @@
   action={`?/register`}
   method="post"
   class="flex flex-col gap-6 border border-borderColor px-4 py-5 rounded min-w-[20%] bg-backgroundSecondary"
+  use:enhance
 >
   <input
     class={classnames(
@@ -31,8 +34,9 @@
       (form?.required || form?.notUniqueUser) && 'border-b-error placeholder:text-error',
     )}
     type="text"
-    placeholder="Nutzername"
+    placeholder="Nutzername (mind. 3 Zeichen [A-Z/0-9])"
     name="name"
+    minlength="3"
   />
   <input
     class={classnames(
@@ -40,8 +44,9 @@
       (form?.required || form?.passwordMismatch) && 'border-b-error placeholder:text-error',
     )}
     type="password"
-    placeholder="Passwort"
+    placeholder="Passwort (mind. 6 Zeichen)"
     name="password"
+    minlength="6"
   />
   <input
     class={classnames(
@@ -49,7 +54,7 @@
       (form?.required || form?.passwordMismatch) && 'border-b-error placeholder:text-error',
     )}
     type="password"
-    placeholder="Passwort bestätigen"
+    placeholder="Passwort wiederholen"
     name="password_confirm"
   />
   {#if errorMessage}

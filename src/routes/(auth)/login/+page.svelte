@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { enhance } from '$app/forms';
   import { goto } from '$app/navigation';
   import ThemeSwitcher from '$lib/components/ThemeSwitcher.svelte';
   import classnames from 'classnames';
@@ -23,6 +24,7 @@
   action={`?/login`}
   method="post"
   class="flex flex-col gap-6 border border-borderColor px-4 py-5 rounded min-w-[20%] bg-backgroundSecondary"
+  use:enhance
 >
   <input
     class={classnames(
@@ -32,6 +34,7 @@
     type="text"
     placeholder="Nutzername"
     name="name"
+    minlength="3"
   />
   <input
     class={classnames(
@@ -41,6 +44,7 @@
     type="password"
     placeholder="Passwort"
     name="password"
+    minlength="6"
   />
   {#if errorMessage}
     <span class="text-error text-sm font-bold">{errorMessage}</span>
