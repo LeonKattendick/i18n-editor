@@ -1,5 +1,6 @@
 <script lang="ts">
   import Loading from '$lib/components/Loading.svelte';
+  import Project from '$lib/components/editor/Project.svelte';
 
   let { data } = $props();
 </script>
@@ -8,10 +9,13 @@
   <title>i18n-editor :: Projekte</title>
 </svelte:head>
 
-{#await data.slimProjectsPromise}
+{#await data.projectsPromise}
   <Loading>Lade Projekte...</Loading>
-{:then slimProjects}
-  {#each slimProjects as project}
-    <div>{project.id}</div>
-  {/each}
+{:then projects}
+  <div class="grid grid-cols-6 gap-4">
+    {#each projects as project}
+      <Project {project} />
+    {/each}
+    <Project isNew />
+  </div>
 {/await}

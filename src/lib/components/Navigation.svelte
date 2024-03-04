@@ -9,7 +9,7 @@
       label: 'Meine Projekte',
     },
     {
-      key: 'edit',
+      key: 'editor',
       label: 'Projekt bearbeiten',
     },
   ];
