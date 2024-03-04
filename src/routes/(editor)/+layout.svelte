@@ -4,7 +4,9 @@
   let { data } = $props();
 </script>
 
-<Navigation theme={data.theme} user={data.user} />
-<div class="p-4">
-  <slot />
+<div class="h-full flex flex-col">
+  <Navigation theme={data.theme} user={data.user} />
+  <div class="h-full p-4">
+    <slot />
+  </div>
 </div>

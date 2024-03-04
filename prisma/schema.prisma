@@ -18,10 +18,11 @@ model User {
 
 model Project {
   id Int @id @default(autoincrement())
-  createdBy Int
+  createdBy String @db.Uuid
+  name String
   locales String[]
   translations Translation[]
-  owner User @relation(fields: [createdBy], references: [id])
+  owner User @relation(fields: [createdBy], references: [uuid])
 }
 
 model Translation {
