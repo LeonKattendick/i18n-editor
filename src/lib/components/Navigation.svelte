@@ -27,7 +27,7 @@
   const currentPath = $derived($page.url.pathname.replace('/', ''));
 </script>
 
-<nav class="bg-backgroundSecondary flex p-5 items-center">
+<nav class="bg-backgroundSecondary border-b border-b-borderColor flex p-5 items-center">
   <span class="flex-1 tracking-widest font-mono">i18n-editor</span>
   <ul class="flex-1 flex justify-center gap-2">
     {#each navItemList as item}
