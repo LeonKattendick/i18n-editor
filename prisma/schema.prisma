@@ -19,5 +19,22 @@ model User {
 model Project {
   id Int @id @default(autoincrement())
   createdBy Int
+  locales String[]
+  translations Translation[]
   owner User @relation(fields: [createdBy], references: [id])
+}
+
+model Translation {
+  id Int @id @default(autoincrement())
+  projectId Int
+  key String @unique
+  items TranslationItem[]
+  project Project @relation(fields: [projectId], references: [id])
+}
+
+model TranslationItem {
+  id Int @id @default(autoincrement())
+  translationId Int
+  content String
+  translation Translation @relation(fields: [translationId], references: [id])
 }
