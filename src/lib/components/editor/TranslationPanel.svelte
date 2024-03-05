@@ -6,7 +6,7 @@
 </script>
 
 {#if translation}
-  test
+  <div class="w-full p-3">test</div>
 {:else}
   <Loading>Wähle einen Übersetzungschlüssel aus</Loading>
 {/if}

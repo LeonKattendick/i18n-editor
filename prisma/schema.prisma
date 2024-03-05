@@ -28,7 +28,7 @@ model Project {
 model Translation {
   id Int @id @default(autoincrement())
   projectId Int
-  key String @unique
+  key String
   items TranslationItem[]
   project Project @relation(fields: [projectId], references: [id])
 }
@@ -36,6 +36,7 @@ model Translation {
 model TranslationItem {
   id Int @id @default(autoincrement())
   translationId Int
+  locale String
   content String
   translation Translation @relation(fields: [translationId], references: [id])
 }

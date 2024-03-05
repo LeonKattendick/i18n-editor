@@ -1,4 +1,5 @@
 <script lang="ts">
+  import classnames from 'classnames';
   import { CirclePlusSolid } from 'flowbite-svelte-icons';
   import type { Project, TranslationWithItems } from './Editor.svelte';
 
@@ -9,10 +10,19 @@
   }>();
 </script>
 
-<div class="w-[25%] border-r border-r-borderColor p-4 overflow-y-auto relative">
+<div class="w-[25%] border-r border-r-borderColor p-3 overflow-y-auto relative">
   <ul>
     {#each translationsWithItems as translation}
-      <li>{translation.id}</li>
+      <li
+        class={classnames(
+          'px-2 my-1',
+          selectedTranslation?.id === translation.id
+            ? 'font-semibold border-l border-l-borderColor'
+            : 'border-l border-l-backgroundSecondary',
+        )}
+      >
+        <button on:click={() => (selectedTranslation = translation)}>{translation.key}</button>
+      </li>
     {/each}
   </ul>
   <button class="absolute top-2 right-2"><CirclePlusSolid class="text-success" size="xl" /></button>
