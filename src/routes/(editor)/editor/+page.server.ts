@@ -5,6 +5,10 @@ import { getCurrentUserUuid } from '$lib/util/helper';
 import type { Project, Translation, TranslationItem } from '@prisma/client';
 import type { ServerLoad } from '@sveltejs/kit';
 
+type PromiseReturn =
+  | { project: Project; translationsWithItems: (Translation & { items: TranslationItem[] })[] }
+  | { notFound: boolean };
+
 export const load: ServerLoad = async ({ cookies, url }) => {
   const projectId = Number.parseInt(url.searchParams.get('id') || '');
 
@@ -12,31 +16,29 @@ export const load: ServerLoad = async ({ cookies, url }) => {
     return { noParameter: true };
   }
 
-  const project = await getProjectsById(projectId);
-  if (!project || project.createdBy !== getCurrentUserUuid(cookies)) {
-    return { notFound: true };
-  }
-
   return {
-    promise: new Promise<{ project: Project; translationsWithItems: (Translation & { items: TranslationItem[] })[] }>(
-      async (res, rej) => {
-        try {
-          const translations = await getTranslationsByProjectId(project.id);
-          const translationItems = await getTranslationItemsByTranslationIds(translations.map((v) => v.id));
+    promise: new Promise<PromiseReturn>(async (res, rej) => {
+      const project = await getProjectsById(projectId);
+      if (!project || project.createdBy !== getCurrentUserUuid(cookies)) {
+        return { notFound: true };
+      }
 
-          const translationsWithItems = translations.map((v) => ({
-            ...v,
-            items: translationItems.filter((w) => w.translationId === v.id),
-          }));
+      try {
+        const translations = await getTranslationsByProjectId(project.id);
+        const translationItems = await getTranslationItemsByTranslationIds(translations.map((v) => v.id));
 
-          res({
-            project,
-            translationsWithItems,
-          });
-        } catch (e) {
-          rej(e);
-        }
-      },
-    ),
+        const translationsWithItems = translations.map((v) => ({
+          ...v,
+          items: translationItems.filter((w) => w.translationId === v.id),
+        }));
+
+        res({
+          project,
+          translationsWithItems,
+        });
+      } catch (e) {
+        rej(e);
+      }
+    }),
   };
 };
