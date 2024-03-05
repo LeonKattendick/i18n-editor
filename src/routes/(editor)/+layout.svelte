@@ -6,7 +6,7 @@
 
 <div class="h-full flex flex-col">
   <Navigation theme={data.theme} user={data.user} />
-  <div class="h-full p-5">
+  <div class="h-full p-5 overflow-y-hidden">
     <slot />
   </div>
 </div>

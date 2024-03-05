@@ -1,5 +1,6 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
+  import { variables } from '$lib/util/variables';
   import type { Project } from '@prisma/client';
   import { FolderPlusSolid } from 'flowbite-svelte-icons';
 
@@ -10,16 +11,26 @@
     return project.locales.map((v) => (v.includes('_') ? v.split('_')[1] : v)).splice(0, 5);
   });
 
-  const handleClick = () => {
+  const handleClick = async () => {
+    let openId;
+
     if (isNew) {
+      const result = await fetch('/api/projects', {
+        method: 'post',
+      });
+      const jsonData = await result.json();
+      openId = jsonData.id;
     } else {
-      goto(`/editor?id=${project?.id}`);
+      openId = project?.id;
     }
+
+    localStorage.setItem(variables.openProjectIdStorageName, openId);
+    goto(`/editor?id=${openId}`);
   };
 </script>
 
 <button
-  class="border border-borderColor bg-backgroundSecondary rounded px-4 py-1 h-[100px] text-left"
+  class="border border-borderColor bg-backgroundSecondary rounded px-4 py-1 h-[100px] text-left hover:shadow-md duration-200"
   on:click={handleClick}
 >
   {#if isNew}

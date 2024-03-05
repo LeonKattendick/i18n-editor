@@ -1,6 +1,6 @@
 <script lang="ts">
   import Loading from '$lib/components/Loading.svelte';
-  import Project from '$lib/components/editor/Project.svelte';
+  import Project from '$lib/components/projects/Project.svelte';
 
   let { data } = $props();
 </script>
