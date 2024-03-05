@@ -17,7 +17,7 @@ export default {
         textColor: colors.neutral[950],
         primary: colors.blue[600],
         secondary: colors.neutral[500],
-        success: colors.green[600],
+        success: colors.green[500],
         error: colors.red[600],
       },
       dark: {
@@ -28,7 +28,7 @@ export default {
         textColor: colors.neutral[50],
         primary: colors.blue[600],
         secondary: colors.neutral[400],
-        success: colors.green[600],
+        success: colors.green[500],
         error: colors.red[600],
       },
     }),

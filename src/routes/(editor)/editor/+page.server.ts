@@ -1,5 +1,8 @@
 import { getProjectsById } from '$lib/services/projectService';
+import { getTranslationItemsByTranslationIds } from '$lib/services/translationItemService';
+import { getTranslationsByProjectId } from '$lib/services/translationService';
 import { getCurrentUserUuid } from '$lib/util/helper';
+import type { Project, Translation, TranslationItem } from '@prisma/client';
 import type { ServerLoad } from '@sveltejs/kit';
 
 export const load: ServerLoad = async ({ cookies, url }) => {
@@ -15,6 +18,25 @@ export const load: ServerLoad = async ({ cookies, url }) => {
   }
 
   return {
-    project,
+    promise: new Promise<{ project: Project; translationsWithItems: (Translation & { items: TranslationItem[] })[] }>(
+      async (res, rej) => {
+        try {
+          const translations = await getTranslationsByProjectId(project.id);
+          const translationItems = await getTranslationItemsByTranslationIds(translations.map((v) => v.id));
+
+          const translationsWithItems = translations.map((v) => ({
+            ...v,
+            items: translationItems.filter((w) => w.translationId === v.id),
+          }));
+
+          res({
+            project,
+            translationsWithItems,
+          });
+        } catch (e) {
+          rej(e);
+        }
+      },
+    ),
   };
 };

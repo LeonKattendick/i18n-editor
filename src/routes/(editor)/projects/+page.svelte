@@ -18,4 +18,6 @@
     {/each}
     <Project isNew />
   </div>
+{:catch _}
+  <Loading>Es ist ein unterwarter Fehler aufgetreten!</Loading>
 {/await}

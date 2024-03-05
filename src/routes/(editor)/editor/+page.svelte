@@ -21,5 +21,11 @@
 {:else if data.notFound}
   <Loading>Das Projekt konnte nicht geöffnet werden!</Loading>
 {:else}
-  <Editor project={data.project!} />
+  {#await data.promise}
+    <Loading>Lade Projekt...</Loading>
+  {:then result}
+    <Editor project={result!.project} translationsWithItems={result!.translationsWithItems!} />
+  {:catch _}
+    <Loading>Es ist ein unterwarter Fehler aufgetreten!</Loading>
+  {/await}
 {/if}

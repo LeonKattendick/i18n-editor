@@ -15,7 +15,7 @@
     let openId;
 
     if (isNew) {
-      const result = await fetch('/api/projects', {
+      const result = await fetch('/api/project', {
         method: 'post',
       });
       const jsonData = await result.json();
@@ -35,7 +35,7 @@
 >
   {#if isNew}
     <div class="flex justify-center items-center gap-2">
-      <FolderPlusSolid class="text-green-500" size="xl" />
+      <FolderPlusSolid class="text-success" size="xl" />
       <span class="text-xl font-bold">Neues Projekt</span>
     </div>
   {:else if project}

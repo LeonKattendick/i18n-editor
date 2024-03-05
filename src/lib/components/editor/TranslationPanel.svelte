@@ -1,7 +1,12 @@
 <script lang="ts">
-  import type { Project } from './Editor.svelte';
+  import Loading from '../Loading.svelte';
+  import type { TranslationWithItems } from './Editor.svelte';
 
-  let { project } = $props<{ project: Project }>();
+  let { translation } = $props<{ translation?: TranslationWithItems }>();
 </script>
 
-<div class="p-4">test</div>
+{#if translation}
+  test
+{:else}
+  <Loading>Wähle einen Übersetzungschlüssel aus</Loading>
+{/if}
