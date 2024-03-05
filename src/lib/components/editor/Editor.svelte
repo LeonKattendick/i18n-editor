@@ -14,7 +14,7 @@
   let { project } = $props<{ project: Project }>();
 </script>
 
-<div class="flex h-full bg-backgroundSecondary rounded">
+<div class="flex h-full bg-backgroundSecondary rounded border border-borderColor">
   <ScrollPanel bind:project />
   <TranslationPanel bind:project />
 </div>
