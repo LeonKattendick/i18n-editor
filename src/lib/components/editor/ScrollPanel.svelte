@@ -10,7 +10,7 @@
   }>();
 </script>
 
-<div class="w-[25%] border-r border-r-borderColor p-3 overflow-y-auto relative">
+<div class="w-[30%] border-r border-r-borderColor p-4 overflow-y-auto relative">
   <ul>
     {#each translationsWithItems as translation}
       <li
@@ -25,5 +25,7 @@
       </li>
     {/each}
   </ul>
-  <button class="absolute top-2 right-2"><CirclePlusSolid class="text-success" size="xl" /></button>
+  <button class="absolute top-2 right-2" title="Neuen Schlüssel anlegen">
+    <CirclePlusSolid class="text-success" size="xl" />
+  </button>
 </div>

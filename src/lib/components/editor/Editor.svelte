@@ -12,13 +12,15 @@
     items: TranslationItem[];
   };
   export type TranslationItem = {
-    id: number;
+    id: number | undefined;
     translationId: number;
+    locale: string;
     content: string;
   };
 </script>
 
 <script lang="ts">
+  import Loading from '../Loading.svelte';
   import ScrollPanel from './ScrollPanel.svelte';
   import TranslationPanel from './TranslationPanel.svelte';
 
@@ -32,5 +34,11 @@
 
 <div class="flex h-full bg-backgroundSecondary rounded border border-borderColor">
   <ScrollPanel bind:project bind:translationsWithItems bind:selectedTranslation />
-  <TranslationPanel bind:translation={selectedTranslation} />
+  {#if selectedTranslation}
+    {#key selectedTranslation}
+      <TranslationPanel bind:project bind:translation={selectedTranslation} />
+    {/key}
+  {:else}
+    <Loading>Wähle einen Übersetzungschlüssel aus</Loading>
+  {/if}
 </div>
