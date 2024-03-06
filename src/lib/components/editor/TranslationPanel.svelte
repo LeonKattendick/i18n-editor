@@ -20,7 +20,13 @@
 
     if (existingChange) {
       const index = changedTranslations.indexOf(existingChange);
-      changedTranslations[index].content = newText;
+
+      const uploadedChange = translation.items.find((v) => v.id === existingChange.id);
+      if (uploadedChange?.content === newText || newText === '') {
+        delete changedTranslations[index];
+      } else {
+        changedTranslations[index].content = newText;
+      }
     } else {
       changedTranslations.push({
         id: locale.item?.id,
@@ -31,30 +37,57 @@
     }
     console.log(changedTranslations[0]);
   };
+
+  const handleTranslate = async (locale: { name: string; item?: TranslationItem }) => {
+    const content =
+      changedTranslations.find((v) => !!v.content)?.content || translation.items.find((v) => !!v.content)?.content;
+    if (!content) return;
+
+    const result = await fetch('/api/translate', {
+      method: 'post',
+      body: JSON.stringify({ locale: locale.name, content }),
+    });
+    const jsonData = await result.json();
+    handleChange(locale, jsonData);
+  };
 </script>
 
 <div class="flex flex-col gap-6 w-full p-4">
   {#each localesWithFlagAndItem as locale}
     <div class="flex items-center gap-4">
       <img src={`https://flagsapi.com/${locale.flag}/flat/32.png`} alt={locale.flag} />
-      <input
-        type="text"
-        class="flex-1 outline-none border-b border-b-borderColor bg-transparent"
-        placeholder={`Gib die Übersetzung von '${translation.key}' für ${locale.name} ein`}
-        value={locale.item?.content}
-        on:input={(e) => handleChange(locale, e.currentTarget.value)}
-      />
+      {#key changedTranslations}
+        <input
+          type="text"
+          class="flex-1 outline-none border-b border-b-borderColor bg-transparent"
+          placeholder={`Gib die Übersetzung von '${translation.key}' für ${locale.name} ein`}
+          value={changedTranslations.find((v) => v.locale === locale.name)?.content || locale.item?.content || ''}
+          on:input={(e) => handleChange(locale, e.currentTarget.value)}
+        />
+      {/key}
       <button
         class={classnames(
           'rounded py-0.5 px-2 duration-200',
           changedTranslations.find((v) => v.locale === locale.name)
-            ? 'bg-primary border border-primary'
+            ? 'bg-primary border border-primary text-neutral-50'
             : 'border border-borderColor',
         )}
       >
         Speichern
       </button>
-      <button><img src="/deepl.png" alt="" width="32" title="Mit DeepL übersetzen" /></button>
+      {#if changedTranslations.length > 0 || translation.items.length > 0}
+        <button on:click={() => handleTranslate(locale)}>
+          <img src="/deepl.png" alt="" width="32" title="Mit DeepL übersetzen" />
+        </button>
+      {:else}
+        <img
+          src="/deepl.png"
+          alt=""
+          width="32"
+          title="Übersetzung nocht nicht verfügbar"
+          class="grayscale opacity-50"
+        />
+      {/if}
     </div>
   {/each}
 </div>
