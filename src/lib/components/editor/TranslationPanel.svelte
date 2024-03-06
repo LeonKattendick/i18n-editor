@@ -28,12 +28,15 @@
         changedTranslations[index].content = newText;
       }
     } else {
-      changedTranslations.push({
-        id: locale.item?.id,
-        content: newText,
-        locale: locale.name,
-        translationId: translation.id,
-      });
+      changedTranslations = [
+        ...changedTranslations,
+        {
+          id: locale.item?.id,
+          content: newText,
+          locale: locale.name,
+          translationId: translation.id,
+        },
+      ];
     }
   };
 
@@ -69,7 +72,7 @@
       const index = translation.items.indexOf(originalItem);
       translation.items[index] = jsonData;
     } else {
-      translation.items.push(jsonData);
+      translation.items = [...translation.items, jsonData];
     }
 
     changedTranslations = changedTranslations.filter((v) => v.locale !== newItem.locale);
