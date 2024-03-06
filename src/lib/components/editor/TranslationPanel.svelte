@@ -22,7 +22,7 @@
       const index = changedTranslations.indexOf(existingChange);
 
       const uploadedChange = translation.items.find((v) => v.id === existingChange.id);
-      if (uploadedChange?.content === newText || newText === '') {
+      if ((!uploadedChange && newText === '') || uploadedChange?.content === newText) {
         changedTranslations = changedTranslations.filter((_, i) => index !== i);
       } else {
         changedTranslations[index].content = newText;
@@ -39,7 +39,8 @@
 
   const handleTranslate = async (locale: { name: string; item?: TranslationItem }) => {
     const content =
-      changedTranslations.find((v) => !!v.content)?.content || translation.items.find((v) => !!v.content)?.content;
+      changedTranslations.find((v) => !!v.content && v.locale !== locale.name)?.content ||
+      translation.items.find((v) => !!v.content && v.locale !== locale.name)?.content;
     if (!content) return;
 
     const result = await fetch('/api/translate', {
@@ -53,6 +54,9 @@
   const handleSave = async (locale: string) => {
     const newItem = changedTranslations.find((v) => v.locale === locale);
     if (!newItem) return;
+
+    const isDelete = newItem.id && newItem.content === '';
+    if (isDelete) return handleDelete(newItem);
 
     const result = await fetch('/api/translation-item', {
       method: newItem.id ? 'put' : 'post',
@@ -68,8 +72,17 @@
       translation.items.push(jsonData);
     }
 
-    const index = changedTranslations.indexOf(newItem);
-    changedTranslations = changedTranslations.filter((_, i) => index !== i);
+    changedTranslations = changedTranslations.filter((v) => v.locale !== newItem.locale);
+  };
+
+  const handleDelete = async (newItem: TranslationItem) => {
+    await fetch('/api/translation-item', {
+      method: 'delete',
+      body: JSON.stringify(newItem.id),
+    });
+
+    translation.items = translation.items.filter((v) => v.locale !== newItem.locale);
+    changedTranslations = changedTranslations.filter((v) => v.locale !== newItem.locale);
   };
 </script>
 
@@ -82,7 +95,7 @@
           type="text"
           class="flex-1 outline-none border-b border-b-borderColor bg-transparent"
           placeholder={`Gib die Übersetzung von '${translation.key}' für ${locale.name} ein`}
-          value={changedTranslations.find((v) => v.locale === locale.name)?.content || locale.item?.content || ''}
+          value={changedTranslations.find((v) => v.locale === locale.name)?.content ?? locale.item?.content ?? ''}
           on:input={(e) => handleChange(locale, e.currentTarget.value)}
         />
       {/key}
@@ -98,7 +111,7 @@
       >
         Speichern
       </button>
-      {#if changedTranslations.length > 0 || translation.items.length > 0}
+      {#if changedTranslations.filter((v) => v.locale !== locale.name).length > 0 || translation.items.filter((v) => v.locale !== locale.name).length > 0}
         <button on:click={() => handleTranslate(locale)}>
           <img src="/deepl.png" alt="" width="32" title="Mit DeepL übersetzen" />
         </button>

@@ -12,3 +12,7 @@ export const createNewTranslationItem = async (item: TranslationItem) => {
 export const updateTranslationItem = async (item: TranslationItem) => {
   return await prisma.translationItem.update({ where: { id: item.id }, data: { content: item.content } });
 };
+
+export const deleteTranslationItem = async (id: number) => {
+  return await prisma.translationItem.delete({ where: { id } });
+};
