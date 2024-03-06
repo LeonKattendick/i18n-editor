@@ -1,25 +1,5 @@
-<script lang="ts" context="module">
-  export type Project = {
-    id: number;
-    createdBy: string;
-    name: string;
-    locales: string[];
-  };
-  export type TranslationWithItems = {
-    id: number;
-    projectId: number;
-    key: string;
-    items: TranslationItem[];
-  };
-  export type TranslationItem = {
-    id: number | undefined;
-    translationId: number;
-    locale: string;
-    content: string;
-  };
-</script>
-
 <script lang="ts">
+  import type { Project, TranslationWithItems } from '$lib/util/types';
   import Loading from '../Loading.svelte';
   import ScrollPanel from './ScrollPanel.svelte';
   import TranslationPanel from './TranslationPanel.svelte';

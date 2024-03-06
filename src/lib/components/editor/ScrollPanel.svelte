@@ -1,7 +1,8 @@
 <script lang="ts">
+  import type { TranslationWithItems } from '$lib/util/types';
+  import type { Project } from '@prisma/client';
   import classnames from 'classnames';
   import { CirclePlusSolid } from 'flowbite-svelte-icons';
-  import type { Project, TranslationWithItems } from './Editor.svelte';
 
   let { project, translationsWithItems, selectedTranslation } = $props<{
     project: Project;

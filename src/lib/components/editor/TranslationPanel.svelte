@@ -1,6 +1,6 @@
 <script lang="ts">
+  import type { Project, TranslationItem, TranslationWithItems } from '$lib/util/types';
   import classnames from 'classnames';
-  import type { Project, TranslationItem, TranslationWithItems } from './Editor.svelte';
 
   let { project, translation } = $props<{ project: Project; translation: TranslationWithItems }>();
 
@@ -23,7 +23,7 @@
 
       const uploadedChange = translation.items.find((v) => v.id === existingChange.id);
       if (uploadedChange?.content === newText || newText === '') {
-        delete changedTranslations[index];
+        changedTranslations = changedTranslations.filter((_, i) => index !== i);
       } else {
         changedTranslations[index].content = newText;
       }
@@ -35,7 +35,6 @@
         translationId: translation.id,
       });
     }
-    console.log(changedTranslations[0]);
   };
 
   const handleTranslate = async (locale: { name: string; item?: TranslationItem }) => {
@@ -49,6 +48,28 @@
     });
     const jsonData = await result.json();
     handleChange(locale, jsonData);
+  };
+
+  const handleSave = async (locale: string) => {
+    const newItem = changedTranslations.find((v) => v.locale === locale);
+    if (!newItem) return;
+
+    const result = await fetch('/api/translation-item', {
+      method: newItem.id ? 'put' : 'post',
+      body: JSON.stringify(newItem),
+    });
+    const jsonData = await result.json();
+
+    const originalItem = translation.items.find((v) => v.locale === locale);
+    if (originalItem) {
+      const index = translation.items.indexOf(originalItem);
+      translation.items[index] = jsonData;
+    } else {
+      translation.items.push(jsonData);
+    }
+
+    const index = changedTranslations.indexOf(newItem);
+    changedTranslations = changedTranslations.filter((_, i) => index !== i);
   };
 </script>
 
@@ -72,6 +93,8 @@
             ? 'bg-primary border border-primary text-neutral-50'
             : 'border border-borderColor',
         )}
+        disabled={!changedTranslations.find((v) => v.locale === locale.name)}
+        on:click={() => handleSave(locale.name)}
       >
         Speichern
       </button>

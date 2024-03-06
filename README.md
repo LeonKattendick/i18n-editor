@@ -17,6 +17,7 @@ pnpm install
 ```
 
 Setup of environment variables (create a `.env` and fill in with data from `.env.example`)
+For the posibility to translate over DeepL, please also add an API key.
 
 ```
 POSTGRES_URL="postgres://default:localhost:5432/db"
@@ -28,6 +29,7 @@ POSTGRES_HOST="localhost"
 POSTGRES_PASSWORD="password"
 POSTGRES_DATABASE="db"
 JWT_PRIVATE_KEY="jwt_private_key"
+DEEPL_API_KEY="deepl_api_key"
 ```
 
 Synchronize your new database with the existing prisma schema

@@ -3,7 +3,6 @@ import { json, type RequestHandler } from '@sveltejs/kit';
 
 export const POST: RequestHandler = async ({ request }) => {
   const jsonData = (await request.json()) as { locale: string; content: string };
-  console.log(jsonData);
 
   const result = await fetch('https://api-free.deepl.com/v2/translate', {
     method: 'post',
