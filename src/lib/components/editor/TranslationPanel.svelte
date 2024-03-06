@@ -93,15 +93,13 @@
   {#each localesWithFlagAndItem as locale}
     <div class="flex items-center gap-4">
       <img src={`https://flagsapi.com/${locale.flag}/flat/32.png`} alt={locale.flag} />
-      {#key changedTranslations}
-        <input
-          type="text"
-          class="flex-1 outline-none border-b border-b-borderColor bg-transparent"
-          placeholder={`Gib die Übersetzung von '${translation.key}' für ${locale.name} ein`}
-          value={changedTranslations.find((v) => v.locale === locale.name)?.content ?? locale.item?.content ?? ''}
-          on:input={(e) => handleChange(locale, e.currentTarget.value)}
-        />
-      {/key}
+      <input
+        type="text"
+        class="flex-1 outline-none border-b border-b-borderColor bg-transparent"
+        placeholder={`Gib die Übersetzung von '${translation.key}' für ${locale.name} ein`}
+        value={changedTranslations.find((v) => v.locale === locale.name)?.content ?? locale.item?.content ?? ''}
+        on:input={(e) => handleChange(locale, e.currentTarget.value)}
+      />
       <button
         class={classnames(
           'rounded py-0.5 px-2 duration-200',
