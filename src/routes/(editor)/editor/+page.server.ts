@@ -16,29 +16,31 @@ export const load: ServerLoad = async ({ cookies, url }) => {
     return { noParameter: true };
   }
 
+  const promise = new Promise<PromiseReturn>(async (res, rej) => {
+    const project = await getProjectsById(projectId);
+    if (!project || project.createdBy !== getCurrentUserUuid(cookies)) {
+      return { notFound: true };
+    }
+
+    try {
+      const translations = await getTranslationsByProjectId(project.id);
+      const translationItems = await getTranslationItemsByTranslationIds(translations.map((v) => v.id));
+
+      const translationsWithItems = translations.map((v) => ({
+        ...v,
+        items: translationItems.filter((w) => w.translationId === v.id),
+      }));
+
+      res({
+        project,
+        translationsWithItems,
+      });
+    } catch (e) {
+      rej(e);
+    }
+  });
+
   return {
-    promise: new Promise<PromiseReturn>(async (res, rej) => {
-      const project = await getProjectsById(projectId);
-      if (!project || project.createdBy !== getCurrentUserUuid(cookies)) {
-        return { notFound: true };
-      }
-
-      try {
-        const translations = await getTranslationsByProjectId(project.id);
-        const translationItems = await getTranslationItemsByTranslationIds(translations.map((v) => v.id));
-
-        const translationsWithItems = translations.map((v) => ({
-          ...v,
-          items: translationItems.filter((w) => w.translationId === v.id),
-        }));
-
-        res({
-          project,
-          translationsWithItems,
-        });
-      } catch (e) {
-        rej(e);
-      }
-    }),
+    promise,
   };
 };
