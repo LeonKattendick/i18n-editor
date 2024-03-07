@@ -4,7 +4,7 @@ This application provides a dummy PoC for an easy way to edit internationalizati
 
 #### Screenshot
 
-<img src="https://i.imgur.com/sN7FrbS.png" alt=""/>
+<img src="https://i.imgur.com/PdIr2Jc.png" alt=""/>
 
 ## Idea
 
