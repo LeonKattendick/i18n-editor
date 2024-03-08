@@ -4,7 +4,7 @@
   import type { Project } from '@prisma/client';
   import { FolderPlusSolid } from 'flowbite-svelte-icons';
 
-  const { project, isNew } = $props<{ project?: Project; isNew?: boolean }>();
+  const { project, isNew, createNew } = $props<{ project?: Project; isNew?: boolean; createNew?: () => void }>();
 
   const flags = $derived.by(() => {
     if (!project) return [];
@@ -12,20 +12,12 @@
   });
 
   const handleClick = async () => {
-    let openId;
-
     if (isNew) {
-      const result = await fetch('/api/project', {
-        method: 'post',
-      });
-      const jsonData = await result.json();
-      openId = jsonData.id;
+      createNew?.();
     } else {
-      openId = project?.id;
+      localStorage.setItem(variables.openProjectIdStorageName, project!.id.toString());
+      goto(`/editor?id=${project!.id}`);
     }
-
-    localStorage.setItem(variables.openProjectIdStorageName, openId);
-    goto(`/editor?id=${openId}`);
   };
 </script>
 
