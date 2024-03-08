@@ -57,6 +57,11 @@
     <option value={['de_AT', 'en_GB', 'fr_FR', 'es_ES']} style="color: black">
       Deutsch, Englisch, Französisch, Spanisch
     </option>
+    <option value={['de_AT', 'zh_CN']} style="color: black">Deutsch, Chinesisch</option>
+    <option value={['de_AT', 'zh_CN', 'ko_KR']} style="color: black">Deutsch, Chinesisch, Koreanisch</option>
+    <option value={['de_AT', 'en_GB', 'fr_FR', 'es_ES', 'zh_CN', 'ko_KR']} style="color: black">
+      Deutsch, Englisch, Französisch, Spanisch, Chinesisch, Koreanisch
+    </option>
   </select>
   {#if modalError}
     <div class="text-error text-sm font-bold mt-2">{modalError}</div>
