@@ -117,13 +117,7 @@
           <img src="/deepl.png" alt="" width="32" title="Mit DeepL übersetzen" />
         </button>
       {:else}
-        <img
-          src="/deepl.png"
-          alt=""
-          width="32"
-          title="Übersetzung nocht nicht verfügbar"
-          class="grayscale opacity-50"
-        />
+        <img src="/deepl.png" alt="" width="32" title="Übersetzung noch nicht verfügbar" class="grayscale opacity-50" />
       {/if}
     </div>
   {/each}
