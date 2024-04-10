@@ -7,6 +7,8 @@
   let { form, data } = $props();
   const theme = $derived(data.theme);
 
+  let loggingIn = $state(false);
+
   const errorMessage = $derived.by(() => {
     if (form?.required) return 'Füllen Sie alle Felder aus';
     if (form?.wrongFormat) return 'Der Nutzername hat ein falsches Format';
@@ -24,7 +26,13 @@
   action={`?/login`}
   method="post"
   class="flex flex-col gap-6 border border-borderColor px-4 py-5 rounded min-w-[20%] bg-backgroundSecondary"
-  use:enhance
+  use:enhance={() => {
+    loggingIn = true;
+    return async ({ update }) => {
+      await update();
+      loggingIn = false;
+    };
+  }}
 >
   <input
     class={classnames(
@@ -50,8 +58,19 @@
     <span class="text-error text-sm font-bold">{errorMessage}</span>
   {/if}
   <div class="flex flex-col gap-2">
-    <button class="bg-primary text-neutral-50 rounded py-1 font-semibold tracking-wide outline-none" type="submit">
-      Einloggen
+    <button
+      class={classnames(
+        ' text-neutral-50 rounded py-1 font-semibold tracking-wide outline-none',
+        !loggingIn ? 'bg-primary' : 'bg-borderColor',
+      )}
+      type="submit"
+      disabled={loggingIn}
+    >
+      {#if loggingIn}
+        Logge ein...
+      {:else}
+        Einloggen
+      {/if}
     </button>
     <button class="text-secondary self-end outline-none" onclick={() => goto('/register')} type="button">
       Account erstellen
