@@ -20,6 +20,7 @@ export const downloadTranslationFiles = async (project: Project, translationsWit
   link.href = window.URL.createObjectURL(zipData);
   link.download = `translations_${project.name}.zip`;
   link.click();
+  link.remove();
 };
 
 const createLanguageJson = (translationsWithItems: TranslationWithItems[]) => {
