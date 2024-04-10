@@ -1,8 +1,9 @@
 <script lang="ts">
+  import { downloadTranslationFiles } from '$lib/services/downloadService';
   import type { TranslationWithItems } from '$lib/util/types';
   import type { Project } from '@prisma/client';
   import classnames from 'classnames';
-  import { CirclePlusSolid } from 'flowbite-svelte-icons';
+  import { CirclePlusSolid, DownloadSolid } from 'flowbite-svelte-icons';
   import CreateItemModal from './CreateItemModal.svelte';
 
   let { project, translationsWithItems, selectedTranslation } = $props<{
@@ -32,5 +33,12 @@
   </ul>
   <button class="absolute top-2 right-2" title="Neuen Schlüssel anlegen" on:click={() => (modalVisible = true)}>
     <CirclePlusSolid class="text-success" size="xl" />
+  </button>
+  <button
+    class="absolute bottom-2 right-2"
+    title="Übersetzungen herunterladen"
+    on:click={() => downloadTranslationFiles(project, translationsWithItems)}
+  >
+    <DownloadSolid class="text-primary" size="xl" />
   </button>
 </div>

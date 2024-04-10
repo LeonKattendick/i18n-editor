@@ -75,6 +75,7 @@
         !loggingIn ? 'bg-success' : 'bg-borderColor',
       )}
       type="submit"
+      disabled={loggingIn}
     >
       {#if loggingIn}
         Erstelle Account...
