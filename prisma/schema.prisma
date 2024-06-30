@@ -14,6 +14,7 @@ model User {
   name String @unique
   password String
   projects Project[]
+  isTranslator Boolean @default(false)
   @@map("i18n_editor_User")
 }
 
