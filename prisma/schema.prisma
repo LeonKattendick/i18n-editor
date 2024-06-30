@@ -14,6 +14,7 @@ model User {
   name String @unique
   password String
   projects Project[]
+  @@map("i18n_editor_User")
 }
 
 model Project {
@@ -23,6 +24,7 @@ model Project {
   locales String[]
   translations Translation[]
   owner User @relation(fields: [createdBy], references: [uuid])
+  @@map("i18n_editor_Project")
 }
 
 model Translation {
@@ -31,6 +33,7 @@ model Translation {
   key String
   items TranslationItem[]
   project Project @relation(fields: [projectId], references: [id])
+  @@map("i18n_editor_Translation")
 }
 
 model TranslationItem {
@@ -39,4 +42,5 @@ model TranslationItem {
   locale String
   content String
   translation Translation @relation(fields: [translationId], references: [id])
+  @@map("i18n_editor_TranslationItem")
 }
